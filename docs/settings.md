@@ -152,82 +152,6 @@ It is not necessary to add all the icons. Only the icons you need.
 
 Simply is using the default [search of ghost](https://ghost.org/docs/themes/search/)
 
-### Language settings
-
-If your blog uses a latin alphabet language (e.g. English, French, Spanish) or a Northern/Eastern European one (e.g. German, Swedish, Hungarian, Slovenian, Estonian) the default configuration will work just fine. In the other cases, find the appropriate `indexOptions` value and add it to your main SearchinGhost configuration.
-
-To create your own specific settings, refer to the
-[FlexSearch README](https://github.com/nextapps-de/flexsearch/tree/0.6.22#add-custom-matcher) and
-[these](https://github.com/nextapps-de/flexsearch/issues/51)
-[three](https://github.com/nextapps-de/flexsearch/issues/51)
-[issues](https://github.com/nextapps-de/flexsearch/issues/73).
-
-This is a copy of the documentation for the library  [Read More](https://github.com/gmfmi/searchinGhost/blob/master/README.md#language-settings).
-
-#### Arabic
-
-```js
-indexOptions: {
-    encode: false,
-    rtl: true,
-    split: /\s+/
-}
-```
-
-#### Chinese, Korean, Japanese
-
-```js
-indexOptions: {
-    encode: false,
-    tokenize: function(str){
-        return str.replace(/[\x00-\x7F]/g, "").split("");
-    }
-}
-```
-
-#### Cyrillic, Indian, Sinhala
-
-This option can be used by any space-separated word languages that uses complex characters.
-
-```js
-indexOptions: {
-    encode: false,
-    split: /\s+/
-}
-```
-
-#### Mixed language types
-
-If you need to use multiple language types (e.g. Cyrillic/English or Indian/Spanish), use the dedicated
-configuration below. I know, it can look scary at first look but just copy/paste it and trust me.
-
-```js
-indexOptions: {
-    split: /\s+/,
-    encode: function(str) {
-        var regexp_replacements = {
-            "a": /[àáâãäå]/g,
-            "e": /[èéêë]/g,
-            "i": /[ìíîï]/g,
-            "o": /[òóôõöő]/g,
-            "u": /[ùúûüű]/g,
-            "y": /[ýŷÿ]/g,
-            "n": /ñ/g,
-            "c": /[ç]/g,
-            "s": /ß/g,
-            " ": /[-/]/g,
-            "": /['!"#$%&\\()\*+,-./:;<=>?@[\]^_`{|}~]/g,
-            " ": /\s+/g,
-        }
-        str = str.toLowerCase();
-        for (var key of Object.keys(regexp_replacements)) {
-            str = str.replace(regexp_replacements[key], key);
-        }
-        return str === " " ? "" : str;
-    }
-}
-```
-
 ## Logo Light / Dark Mode
 
 - Add your logo for dark mode in the folder `assets/images/logo-dark-mode.png`
@@ -296,11 +220,63 @@ If you need a quick way to make fully functional comments Simply has everything 
 
 [Disqus](https://disqus.com/) allows you to embed comment threads within Ghost posts and pages, including additional functionality like upvoting and adding Emoji reactions.
 
-— First, you will need to get your account `disqusShortName`
+➡ First, you will need to get your account `disqusShortName`
 
-➡️ `Dashboard -> Site design -> Post -> Comments disqus short name`
+➡ you need to edit the following file. `partials/article/article-comments.hbs`
 
-![Disqus Comments simply](https://user-images.githubusercontent.com/10253167/161466531-c08a9c6f-c589-4eff-ae42-4f11066b014b.jpg)
+➡ Make sure to replace `HERE_YOUR_DISQUS_SHORT_NAME` in the code with your `disqusShortName`.
+
+➡ Inside the file you have to delete all the content and add all the code that I leave below.
+
+```handlebars
+<div id="post-comments" class="post-comments bg-gray-150 pt-8 pb-8">
+    <div class="mx-auto px-4 max-w-5xl">
+        {{!-- Disqus Comments --}}
+        <div id="disqus_thread"></div>
+    </div>
+</div>
+
+{{#contentFor "scripts"}}
+<script>
+(function(d, s, id) {
+    var disqus_config = function () {
+        this.page.url = '{{url absolute="true"}}';
+        this.page.identifier = 'ghost-{{comment_id}}';
+    };
+
+    function loadDisqus() {
+        var currentScroll = d.scrollingElement.scrollTop;
+        var disqusTarget = d.getElementById('disqus_thread');
+
+        if (d.getElementById(id)) return;
+
+        if( disqusTarget && (currentScroll > disqusTarget.getBoundingClientRect().top - 150) ) {
+            var js = d.createElement(s);
+            js.id = id;
+            js.src = 'https://HERE_YOUR_DISQUS_SHORT_NAME.disqus.com/embed.js';
+            js.async = true;
+            js.defer = true;
+            js.setAttribute('data-timestamp', +new Date());
+            d.body.appendChild(js);
+
+            window.removeEventListener('scroll', loadDisqus);
+        }
+    }
+
+    window.addEventListener('scroll', loadDisqus);
+
+    document.querySelector('.js-dark-mode').addEventListener('click', function() {
+        if (window.DISQUS) {
+            DISQUS.reset({
+                reload: true,
+                config: disqus_config
+            });
+        }
+    });
+}(document, 'script', 'disqus-js'));
+</script>
+{{/contentFor}}
+```
 
 ---
 
