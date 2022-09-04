@@ -81,7 +81,7 @@
           "Dark",
           "No Secondary Navigation"
         ],
-        "default": "Default"
+        "default": "Dark"
       },
       "color_scheme": {
         "type": "select",
@@ -116,7 +116,7 @@
           "Featured Slider",
           "Cover"
         ],
-        "default": "Cover",
+        "default": "Featured Slider",
         "group": "homepage"
       },
       "publication_cover_title": {
@@ -142,7 +142,7 @@
           "font-sans",
           "font-serif"
         ],
-        "default": "font-serif",
+        "default": "font-sans",
         "group": "post"
       },
       "show_newsletter": {
