@@ -153,18 +153,41 @@ const simplySetup = () => {
 
   darkMode()
 
-  /* DropDown Toggle
+  /* DropDown Keyboard & Focus Accessibility
   /* ---------------------------------------------------------- */
   const dropDownMenuToggle = () => {
-    const dropdowns = docSelectorAll('.dropdown:not(.is-hoverable)')
+    const dropdowns = docSelectorAll('.dropdown')
 
     if (!dropdowns.length) return
 
     dropdowns.forEach(function (el) {
-      el.addEventListener('click', function (event) {
-        event.stopPropagation()
-        el.classList.toggle('is-active')
-        documentBody.classList.remove('has-menu')
+      const trigger = el.querySelector('.dropdown-trigger')
+
+      if (trigger) {
+        trigger.addEventListener('click', function (event) {
+          event.stopPropagation()
+          el.classList.toggle('is-active')
+          documentBody.classList.remove('has-menu')
+        })
+
+        trigger.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault()
+            e.stopPropagation()
+            el.classList.toggle('is-active')
+            documentBody.classList.remove('has-menu')
+          }
+        })
+      }
+
+      el.addEventListener('focusin', function () {
+        el.classList.add('is-active')
+      })
+
+      el.addEventListener('focusout', function (e) {
+        if (!el.contains(e.relatedTarget)) {
+          el.classList.remove('is-active')
+        }
       })
     })
 
@@ -177,11 +200,27 @@ const simplySetup = () => {
 
   dropDownMenuToggle()
 
-  /* Toggle Menu
+  /* Toggle Menu & Close handlers
   /* ---------------------------------------------------------- */
-  document.querySelector('.js-menu-toggle').addEventListener('click', function (e) {
-    e.preventDefault()
-    documentBody.classList.toggle('has-menu')
+  const menuToggle = document.querySelector('.js-menu-toggle')
+  if (menuToggle) {
+    menuToggle.addEventListener('click', function (e) {
+      e.preventDefault()
+      const isExpanded = documentBody.classList.toggle('has-menu')
+      menuToggle.setAttribute('aria-expanded', isExpanded ? 'true' : 'false')
+    })
+  }
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      if (documentBody.classList.contains('has-menu')) {
+        documentBody.classList.remove('has-menu')
+        if (menuToggle) menuToggle.setAttribute('aria-expanded', 'false')
+      }
+      docSelectorAll('.dropdown').forEach(function (el) {
+        el.classList.remove('is-active')
+      })
+    }
   })
 }
 

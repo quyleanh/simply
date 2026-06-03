@@ -16,6 +16,7 @@ body {
   margin: 0 auto;
   overflow-x: hidden;
   text-rendering: optimizeLegibility;
+  font-size-adjust: from-font;
 }
 
 a {

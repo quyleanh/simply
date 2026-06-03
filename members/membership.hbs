@@ -19,7 +19,7 @@
 <section class="mb-24 px-4">
     <div class="plan-wrap max-w-1100 mx-auto grid gap-6 md:grid-cols-2 lg:grid-cols-12">
 
-        {{#get "tiers" include="monthly_price,benefits" limit="all" as |tiers|}}
+        {{#get "tiers" include="monthly_price,benefits" limit="100" as |tiers|}}
             {{#foreach tiers}}
                 <div class="plan-box plab-box-{{name}} p-8 shadow-lg lg:col-span-4 bg-gray-100">
                     <header class="plan-box-header">

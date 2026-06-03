@@ -12,7 +12,7 @@
         <div class="uppercase font-medium text-sm mb-3 px-2">{{t "Getting Started"}}</div>
 
         <ul itemscope itemtype="http://www.schema.org/SiteNavigationElement" role="menu" class="leading-tight text-base">
-            {{#get "posts" filter="tags:{{tags.[0].slug}}" limit="all" order="published_at asc"}}
+            {{#get "posts" filter="tags:{{tags.[0].slug}}" limit="100" order="published_at asc"}}
             {{!-- {{#get "posts" filter="tags:{{primary_tag.slug}}" limit="all" order="published_at asc"}} --}}
             {{#foreach posts}}
                 <li itemprop="name" role="menuitem" >

@@ -1,9 +1,13 @@
 .header {
-  transition: transform .3s;
+  transition: transform .3s, background-color .3s, box-shadow .3s, border-bottom .3s;
 }
 
 .header-bg {
-  background-color: var(--header-bg);
+  background-color: var(--header-bg-glass);
+  backdrop-filter: blur(12px);
+  /* stylelint-disable-next-line property-no-vendor-prefix */
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-color);
 }
 
 .shadow-header {

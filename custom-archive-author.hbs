@@ -26,7 +26,7 @@
 </header>
 {{/post}}
 
-{{#get "authors" limit="all"}}
+{{#get "authors" limit="100"}}
 
 <div class="container mx-auto grid gap-10 py-vmin8 md:grid-cols-2 lg:grid-cols-4">
     {{#foreach authors}}
@@ -37,8 +37,8 @@
             {{#if bio}}<p class="author-card-bio text-gray-500 line-clamp-3 mt-3 leading-relaxed">{{bio}}</p>{{/if}}
 
             <div class="pt-5 space-x-2">
-                {{#if facebook}}<a href="{{facebook_url}}" class="button is-white" title="Facebook" target="_blank" rel="noopener noreferrer"><svg class="icon"><use xlink:href="#icon-facebook"></use></svg></a>{{/if}}
-                {{#if twitter}}<a href="{{twitter_url}}" class="button is-white" title="{{twitter}}" target="_blank" rel="noopener noreferrer"><svg class="icon"><use xlink:href="#icon-twitter"></use></svg></a>{{/if}}
+                {{#if facebook}}<a href="{{social_url type="facebook"}}" class="button is-white" title="Facebook" target="_blank" rel="noopener noreferrer"><svg class="icon"><use xlink:href="#icon-facebook"></use></svg></a>{{/if}}
+                {{#if twitter}}<a href="{{social_url type="twitter"}}" class="button is-white" title="{{twitter}}" target="_blank" rel="noopener noreferrer"><svg class="icon"><use xlink:href="#icon-twitter"></use></svg></a>{{/if}}
                 {{#if website}}<a href="{{website}}" class="button is-white" title="{{website}}" target="_blank" rel="noopener noreferrer"><svg class="icon is-stroke"><use xlink:href="#icon-link"></use></svg></a>{{/if}}
             </div>
         </article>

@@ -13,6 +13,7 @@
   /* Header */
   --header-text-link: $primary-text-color;
   --header-bg: #fff;
+  --header-bg-glass: rgba(255, 255, 255, 0.85);
 
   /* story */
   --story-small-bg: #fff;
@@ -79,6 +80,7 @@
   /* Header */
   --header-text-link: #fff;
   --header-bg: #000;
+  --header-bg-glass: rgba(0, 0, 0, 0.8);
 
   /* story */
   --story-small-bg: #131212;

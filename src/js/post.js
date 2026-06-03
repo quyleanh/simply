@@ -73,6 +73,67 @@ const simplyPost = () => {
   if (docSelectorAll('code[class*=language-]').length && typeof prismJs !== 'undefined') {
     loadScript(prismJs)
   }
+
+  /* Reading Progress Fallback
+  /* ---------------------------------------------------------- */
+  const initReadingProgressFallback = () => {
+    const progressBar = document.querySelector('#reading-progress')
+    if (!progressBar) return
+
+    if (CSS.supports('animation-timeline', 'scroll()')) return
+
+    const handleScroll = () => {
+      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight
+      const currentScroll = window.scrollY
+      const progressPercent = scrollHeight > 0 ? (currentScroll / scrollHeight) : 0
+      progressBar.style.transform = `scaleX(${progressPercent})`
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+  }
+
+  initReadingProgressFallback()
+
+  /* Scroll Spy & TOC Active Highlighting
+  /* ---------------------------------------------------------- */
+  const initScrollSpy = () => {
+    const postBody = document.querySelector('.post-body')
+    if (!postBody) return
+
+    const headings = postBody.querySelectorAll('h2[id], h3[id]')
+    if (!headings.length) return
+
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px 0px -60% 0px',
+      threshold: 0
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute('id')
+          const tocLinks = document.querySelectorAll('.js-tocbot a, .js-table-content a')
+          const activeLink = document.querySelector(`.js-tocbot a[href="#${id}"], .js-table-content a[href="#${id}"]`)
+
+          if (activeLink) {
+            tocLinks.forEach(link => {
+              link.classList.remove('text-primary', 'font-semibold', 'font-medium')
+              if (link.closest('.js-tocbot')) {
+                link.classList.add('text-gray-500')
+              }
+            })
+            activeLink.classList.add('text-primary', 'font-medium')
+            activeLink.classList.remove('text-gray-500')
+          }
+        }
+      })
+    }, observerOptions)
+
+    headings.forEach(heading => observer.observe(heading))
+  }
+
+  setTimeout(initScrollSpy, 150)
 }
 
 document.addEventListener('DOMContentLoaded', simplyPost)
