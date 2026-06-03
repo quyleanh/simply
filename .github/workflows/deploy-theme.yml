@@ -13,11 +13,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-          cache: 'npm'
 
       - name: Install dependencies and compile assets
         run: |
-          npm ci
+          npm install
           npm run build
 
       - name: Deploy Ghost Theme
