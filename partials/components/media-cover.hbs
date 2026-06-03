@@ -1,4 +1,18 @@
 {{#if background}}
+{{#if priority}}
+<img class="inset-image object-center object-cover absolute w-full h-full"
+    srcset="{{img_url background size="s"}} 300w,
+            {{img_url background size="m"}} 600w,
+            {{img_url background size="l"}} 1000w,
+            {{img_url background size="xl"}} 2000w"
+    sizes="100vw"
+    src="{{img_url background size="xl"}}"
+    fetchpriority="high"
+    alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{alt_title}}{{/if}}"
+    width="1200"
+    height="628"
+/>
+{{else}}
 <img class="inset-image blur-up lazyload"
     src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
     data-srcset="{{img_url background size="s"}} 300w,
@@ -10,6 +24,7 @@
     height="628"
     alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{alt_title}}{{/if}}"
 />
+{{/if}}
 
 {{#if has_gradient}}<div class="simply-cover-gradient absolute inset-0 z-2 bg-black bg-opacity-50"></div>{{/if}}
 {{/if}}

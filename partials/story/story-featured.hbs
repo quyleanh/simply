@@ -17,8 +17,9 @@
                 {{img_url feature_image size="m"}} 600w,
                 {{img_url feature_image size="l"}} 1000w,
                 {{img_url feature_image size="xl"}} 2000w"
-        src="{{img_url feature_image size="m"}}"
-        sizes="auto"
+        src="{{img_url feature_image size="xl"}}"
+        sizes="100vw"
+        fetchpriority="high"
         alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{title}}{{/if}}"
     />
     {{/if}}

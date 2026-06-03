@@ -10,13 +10,14 @@
 
         {{#if @custom.publication_cover_img}}
         <figure class="relative max-w-lg w-full hidden md:flex mt-12 md:mt-0">
-            <img class="blur-up lazyload object-center w-full"
-                src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                data-srcset="{{img_url @custom.publication_cover_img size="s"}} 300w,
+            <img class="object-center w-full"
+                srcset="{{img_url @custom.publication_cover_img size="s"}} 300w,
                         {{img_url @custom.publication_cover_img size="m"}} 600w,
                         {{img_url @custom.publication_cover_img size="l"}} 1000w,
                         {{img_url @custom.publication_cover_img size="xl"}} 2000w"
-                data-sizes="auto"
+                sizes="(max-width: 1024px) 100vw, 512px"
+                src="{{img_url @custom.publication_cover_img size="m"}}"
+                fetchpriority="high"
                 width="512"
                 height="384"
                 alt="{{#if @custom.publication_cover_title}}{{@custom.publication_cover_title}}{{else}}{{@site.title}}{{/if}}"/>
@@ -25,7 +26,7 @@
     </div>
 
     {{!-- Featured Media - partials/components/media-cover.hbs --}}
-    {{> "components/media-cover" background=@site.cover_image alt_title=@site.title}}
+    {{> "components/media-cover" background=@site.cover_image alt_title=@site.title priority=true}}
 </div>
 {{/match}}
 

@@ -65,6 +65,14 @@
     <link rel="stylesheet" type="text/css" href="{{asset "styles/main.css"}}"/>
     {{!-- <style>{{> "main-styles"}}</style> --}}
 
+    {{#is "post"}}
+    {{#post}}
+    {{#if feature_image}}
+    <link rel="preload" href="{{img_url feature_image size="xl"}}" as="image" imagesrcset="{{img_url feature_image size="s"}} 300w, {{img_url feature_image size="m"}} 600w, {{img_url feature_image size="l"}} 1000w, {{img_url feature_image size="xl"}} 2000w" imagesizes="(max-width: 400px) 300px, (max-width: 730px) 600px, (max-width: 1600px) 100vw">
+    {{/if}}
+    {{/post}}
+    {{/is}}
+
     {{!-- Ghost outputs important style and meta data with this tag --}}
     {{ghost_head}}
 
@@ -114,7 +122,7 @@
     {{{block "scripts"}}}
 
     {{!-- Main scripts --}}
-    <script src="{{#is "post, page"}}{{asset "scripts/post.js"}}{{else}}{{asset "scripts/main.js"}}{{/is}}"></script>
+    <script src="{{#is "post, page"}}{{asset "scripts/post.js"}}{{else}}{{asset "scripts/main.js"}}{{/is}}" defer></script>
 
     {{!-- Pagination Infinite Scroll --}}
     {{#match @custom.pagination "Infinite Scroll"}}{{#if pagination.next}}<script src="{{asset "scripts/pagination.js"}}" defer async></script>{{/if}}{{/match}}
