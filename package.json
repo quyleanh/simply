@@ -2,7 +2,7 @@
   "name": "simply",
   "description": "simply theme for ghost by @GodoFredoNinja",
   "demo": "https://godofredo.ninja",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "engines": {
     "ghost": ">=5.0.0"
   },
